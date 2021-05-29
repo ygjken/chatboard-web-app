@@ -1,10 +1,11 @@
 {{ define "content" }}
 
-<div class="card border-primary mb-3">
-    <div class="card-header">Header</div>
-    <div class="card-body">
-        <h4 class="card-title">ユーザ: {{ .Topic }}</h4>
+<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ .Topic }}</h5>
+        <small>time: {{ .CreateAt }}</small>
+        <small>Test Done.</small>
     </div>
-</div>
+</a>
 
 {{ end }}
