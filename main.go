@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/ygjken/chatboard-web-app/handlers"
@@ -15,12 +14,13 @@ func main() {
 	// localhost/static/にアクセスした場合
 	// ./publicを見に行く
 	files := http.FileServer(http.Dir("public"))
-	fmt.Println(files)
 	mux.Handle("/static/", http.StripPrefix("/static/", files))
 
 	// ハンドルファンクションにリダイレクト
 	mux.HandleFunc("/", handlers.Index)
-	// mux.HandleFunc("/login", handlers.login)
+	mux.HandleFunc("/login", handlers.LogIn)
+	// login.htmlにアクセスしたときに/authenticateが呼び出すようになっている
+	mux.HandleFunc("/authenticate", handlers.Authenticate)
 
 	server := &http.Server{
 		Addr:    "localhost:8080",

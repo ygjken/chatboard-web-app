@@ -40,6 +40,9 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 
 	templates := template.Must(template.ParseFiles(t...))
 	templates.ExecuteTemplate(w, "layout", nil)
+
+	// メモ, GETから取得してきた情報を取り出す
+	// fmt.Println(r.FormValue("email"))
 }
 
 func session(w http.ResponseWriter, r *http.Request) (s data.Session, err error) {
