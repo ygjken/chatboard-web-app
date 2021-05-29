@@ -3,9 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"text/template"
 
-	"github.com/ygjken/chatboard-web-app/data"
+	"github.com/ygjken/chatboard-web-app/handlers"
 )
 
 func main() {
@@ -20,7 +19,8 @@ func main() {
 	mux.Handle("/static/", http.StripPrefix("/static/", files))
 
 	// ハンドルファンクションにリダイレクト
-	mux.HandleFunc("/", index)
+	mux.HandleFunc("/", handlers.Index)
+	// mux.HandleFunc("/login", handlers.login)
 
 	server := &http.Server{
 		Addr:    "localhost:8080",
@@ -28,13 +28,4 @@ func main() {
 	}
 
 	server.ListenAndServe()
-}
-
-func index(w http.ResponseWriter, r *http.Request) {
-	files := []string{"templates/layout.html", "templates/index.html"}
-	templates := template.Must(template.ParseFiles(files...))
-	thread, err := data.Threads()
-	if err == nil {
-		templates.ExecuteTemplate(w, "layout", thread)
-	}
 }
