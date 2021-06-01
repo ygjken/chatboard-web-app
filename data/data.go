@@ -7,3 +7,11 @@ import (
 )
 
 var Db *sql.DB
+
+func init() {
+	var err error
+	Db, err = sql.Open("postgres", "user=pguser dbname=chatboard sslmode=disable")
+	if err != nil {
+		panic(err)
+	}
+}
