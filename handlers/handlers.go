@@ -15,7 +15,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		_, err := session(w, r) // セッションが存在しなければエラーが返される
 		public := []string{"templates/layout.html",
-			"templates/index.html",
+			"templates/public.index.html",
 			"templates/public.navbar.html"}
 		private := []string{"templates/layout.html",
 			"templates/index.html",
