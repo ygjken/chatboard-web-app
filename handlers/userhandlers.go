@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/ygjken/chatboard-web-app/data"
@@ -10,6 +11,11 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	user, _ := data.UserByEmail(r.PostFormValue("email"))
 	// TODO: パスワードを暗号化
+
+	// debug
+	fmt.Println("email:", r.PostFormValue("email"))
+	fmt.Println("pass:", r.PostFormValue("password"))
+	// -----
 	if user.Password == r.PostFormValue("password") {
 		session, _ := user.CreateSession()
 		cookie := http.Cookie{

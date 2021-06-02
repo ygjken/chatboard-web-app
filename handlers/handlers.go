@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"errors"
+	"fmt"
 	"html/template"
 	"net/http"
 
@@ -14,6 +15,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	threads, err := data.Threads()
 	if err == nil {
 		_, err := session(w, r) // セッションが存在しなければエラーが返される
+		fmt.Println("session:", err)
 		public := []string{"templates/layout.html",
 			"templates/public.index.html",
 			"templates/public.navbar.html"}
