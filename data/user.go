@@ -26,7 +26,7 @@ type Session struct {
 
 // 発生したセッションをデータベース内に永久保存(?今のところは)
 func (user *User) CreateSession() (s Session, err error) {
-	statement := "insert to sessions (uuid, email, user_id, created_at) values ($1, $2, $3, $4) returning id, uuid, email, user_id, created_at"
+	statement := "insert into sessions (uuid, email, user_id, created_at) values ($1, $2, $3, $4) returning id, uuid, email, user_id, created_at"
 	stmt, err := Db.Prepare(statement) // 複数SQL文を実行できるように待機する
 	if err != nil {
 		return
