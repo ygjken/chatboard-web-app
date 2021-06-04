@@ -9,7 +9,10 @@ import (
 
 func Authenticate(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	user, _ := data.UserByEmail(r.PostFormValue("email"))
+	user, err := data.UserByEmail(r.PostFormValue("email"))
+	if err != nil {
+		fmt.Println(err)
+	}
 	// TODO: パスワードを暗号化
 
 	// debug

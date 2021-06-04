@@ -53,6 +53,12 @@ func (s *Session) Check() (valid bool, err error) {
 	return
 }
 
+// セッションから使用しているユーザを返す関数
+func (s *Session) GetUser() (u User, err error) {
+	err = Db.QueryRow("select id, uuid, name, email from users where id = $1", s.UserId).Scan(&u.Id, &u.Uuid, &u.Name, &u.Email)
+	return
+}
+
 func createUUID() (uuid string) {
 	u := new([16]byte)
 	_, err := rand.Read(u[:])
