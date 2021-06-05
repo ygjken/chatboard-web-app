@@ -14,21 +14,24 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 	s, err := session(w, r) // セッションが存在しなければエラーが返される
 
-	public := []string{"templates/layout.html",
+	public := []string{
+		"templates/layout.html",
 		"templates/public.index.html",
-		"templates/public.navbar.html"}
-	private := []string{"templates/layout.html",
+		"templates/public.navbar.html",
+	}
+	private := []string{
+		"templates/layout.html",
 		"templates/private.index.html",
-		"templates/private.navbar.html"}
+		"templates/private.navbar.html",
+	}
 
 	if err != nil { // セッションが取得できた場合
-		templates = template.Must(templates.ParseFiles(public...))
+		templates = template.Must(template.ParseFiles(public...))
 		templates.ExecuteTemplate(w, "layout", nil)
 
 	} else { // セッションが取得できなかった場合
 		templates = template.Must(template.ParseFiles(private...))
 		u, _ := s.GetUser()
-		fmt.Println("user:", u)
 		templates.ExecuteTemplate(w, "layout", u)
 	}
 
@@ -46,6 +49,22 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 
 	// メモ, GETから取得してきた情報を取り出す
 	// fmt.Println(r.FormValue("email"))
+}
+
+func Threads(w http.ResponseWriter, r *http.Request) {
+	files := []string{
+		"templates/layout.html",
+		"templates/private.navbar.html",
+		"templates/threads.html",
+	}
+
+	t := template.Must(template.ParseFiles(files...))
+	threads, err := data.GetThreads()
+	if err != nil {
+		fmt.Println("Threads():", err)
+	}
+	t.ExecuteTemplate(w, "layout", threads)
+
 }
 
 func session(w http.ResponseWriter, r *http.Request) (s data.Session, err error) {

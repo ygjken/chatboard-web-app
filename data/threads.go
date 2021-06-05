@@ -1,6 +1,8 @@
 package data
 
-import "time"
+import (
+	"time"
+)
 
 type Thread struct {
 	Id       int
@@ -10,10 +12,19 @@ type Thread struct {
 	CreateAt time.Time
 }
 
-func Threads() (t Thread, err error) {
-	// テストコード
-	// TODO: スライスに変更する
-	t = Thread{Id: 0, Uuid: "460", Topic: "Test", UserId: 100, CreateAt: time.Now()}
-	err = nil
+func GetThreads() (t []Thread, err error) {
+	rows, err := Db.Query("select id, uuid, topic, user_id, created_at from threads order by created_at desc")
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		c := Thread{}
+		err = rows.Scan(&c.Id, &c.Uuid, &c.Topic, &c.UserId, &c.CreateAt)
+		if err != nil {
+			return
+		}
+		t = append(t, c)
+	}
+	rows.Close()
 	return
 }

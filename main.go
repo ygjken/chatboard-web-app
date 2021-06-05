@@ -19,6 +19,7 @@ func main() {
 	// ハンドルファンクションにリダイレクト
 	mux.HandleFunc("/", handlers.Index)
 	mux.HandleFunc("/login", handlers.LogIn)
+	mux.HandleFunc("/threads", handlers.Threads)
 	// login.htmlにアクセスしたときに/authenticateが呼び出すようになっている
 	mux.HandleFunc("/authenticate", handlers.Authenticate)
 
