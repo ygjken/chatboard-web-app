@@ -1,18 +1,21 @@
 {{ define "content" }}
 
-<div class="list-group">
+
+
+<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
 
     {{ range .}}
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <a href="/thread/read?id={{.Uuid}}" class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">{{ .Topic }}</h5>
-            <small class="text-muted">{{ .Id }}, {{ .CreatAt }}</small>
+            <small class="text-muted">{{ .GetCreateAt }}</small>
         </div>
-        <p class="mb-1">{{ .Topic }}</p>
-        <small class="text-muted">Donec id elit non mi porta.</small>
+        <small class="text-muted"> {{ .GetUser.Name }}</small>
     </a>
     {{ end }}
 
-</div>
+</a>
+
+
 
 {{ end }}
