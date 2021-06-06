@@ -13,7 +13,6 @@ func ReadThreads(w http.ResponseWriter, r *http.Request) {
 	uuid := vals.Get("id")
 
 	thread, err := data.GetThreadByUUID(uuid)
-	fmt.Println(thread.GetPosts())
 	if err != nil {
 		fmt.Println("GetPost():", err)
 	} else {
@@ -27,7 +26,7 @@ func ReadThreads(w http.ResponseWriter, r *http.Request) {
 			}
 
 			templates := template.Must(template.ParseFiles(files...))
-			templates.ExecuteTemplate(w, "layout", thread)
+			templates.ExecuteTemplate(w, "layout", &thread) // ポインタを渡さないと行けないので注意
 		}
 	}
 }

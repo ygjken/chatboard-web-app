@@ -51,6 +51,17 @@ func (t *Thread) GetPosts() (p []Post) {
 	return
 }
 
+func (p *Post) GetCreateAt() string {
+	return p.CreatedAt.Format("Jan 2, 2006 at 3:04pm")
+}
+
+func (p *Post) GetUser() (u User) {
+	u = User{}
+	Db.QueryRow("SELECT id, uuid, name, email, created_at FROM users WHERE id = $1", p.UserId).
+		Scan(&u.Id, &u.Uuid, &u.Name, &u.Email, &u.CreatedAt)
+	return
+}
+
 func GetThreads() (t []Thread, err error) {
 	rows, err := Db.Query("select id, uuid, topic, user_id, created_at from threads order by created_at desc")
 	if err != nil {

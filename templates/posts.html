@@ -1,13 +1,31 @@
 {{ define "content" }}
 
 
+<div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
 
-<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        {{ range .GetPosts}}
+        <a class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">{{ .Body }}</h6>
+                <small class="text-muted">{{ .GetCreateAt }}</small>
+            </div>
+            <small class="text-muted"> {{ .GetUser.Name }}</small>
+        </a>
+        {{ end }}
 
-    {{ .GetCreateAt }}
+    </a>
+</div>
 
-</a>
+<form role="form" action="/thread/post" method="post">
+    <fieldset>
+        <div class="form-group">
 
-
+            <label for="exampleTextarea" class="form-label mt-4">Join This Thread!</label>
+            <textarea class="form-control" id="exampleTextarea" rows="3" id="postform" name="postform"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </fieldset>
+</form>
 
 {{ end }}
