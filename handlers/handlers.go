@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"errors"
-	"fmt"
 	"html/template"
 	"net/http"
 
@@ -34,36 +33,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		u, _ := s.GetUser()
 		templates.ExecuteTemplate(w, "layout", u)
 	}
-
-}
-
-func LogIn(w http.ResponseWriter, r *http.Request) {
-	t := []string{
-		"templates/layout.html",
-		"templates/public.navbar.html",
-		"templates/login.html",
-	}
-
-	templates := template.Must(template.ParseFiles(t...))
-	templates.ExecuteTemplate(w, "layout", nil)
-
-	// メモ, GETから取得してきた情報を取り出す
-	// fmt.Println(r.FormValue("email"))
-}
-
-func Threads(w http.ResponseWriter, r *http.Request) {
-	files := []string{
-		"templates/layout.html",
-		"templates/private.navbar.html",
-		"templates/threads.html",
-	}
-
-	t := template.Must(template.ParseFiles(files...))
-	threads, err := data.GetThreads()
-	if err != nil {
-		fmt.Println("Threads():", err)
-	}
-	t.ExecuteTemplate(w, "layout", threads)
 
 }
 
