@@ -12,6 +12,15 @@ type Thread struct {
 	CreateAt time.Time
 }
 
+type Post struct {
+	Id        int
+	Uuid      string
+	Body      string
+	UserId    int
+	ThreadId  int
+	CreatedAt time.Time
+}
+
 func (t *Thread) GetCreateAt() string {
 	return t.CreateAt.Format("Jan 2, 2006 at 3:04pm")
 }
@@ -20,6 +29,25 @@ func (t *Thread) GetUser() (u User) {
 	u = User{}
 	Db.QueryRow("SELECT id, uuid, name, email, created_at FROM users WHERE id = $1", t.UserId).
 		Scan(&u.Id, &u.Uuid, &u.Name, &u.Email, &u.CreatedAt)
+	return
+}
+
+func (t *Thread) GetPosts() (p []Post) {
+	rows, err := Db.Query("select id, uuid, body, user_id, thread_id, created_at from posts where thread_id = $1", t.Id)
+	if err != nil {
+		return
+	}
+
+	for rows.Next() {
+		post := Post{}
+		err = rows.Scan(&post.Id, &post.Uuid, &post.Body, &post.UserId, &post.ThreadId, &post.CreatedAt)
+		if err != nil {
+			return
+		}
+
+		p = append(p, post)
+	}
+	rows.Close()
 	return
 }
 

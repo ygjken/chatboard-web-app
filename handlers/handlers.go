@@ -73,7 +73,7 @@ func session(w http.ResponseWriter, r *http.Request) (s data.Session, err error)
 		s = data.Session{Uuid: cookie.Value}
 		ok, _ := s.Check()
 		if !ok {
-			err = errors.New("Invalid session") // セッションが存在しなければエラーを返す
+			err = errors.New("invalid session") // セッションが存在しなければエラーを返す
 		}
 	}
 

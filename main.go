@@ -13,13 +13,14 @@ func main() {
 	// 静的ファイルへのリダイレクト
 	// localhost/static/にアクセスした場合
 	// ./publicを見に行く
-	files := http.FileServer(http.Dir("public"))
+	files := http.FileServer(http.Dir("/public"))
 	mux.Handle("/static/", http.StripPrefix("/static/", files))
 
 	// ハンドルファンクションにリダイレクト
 	mux.HandleFunc("/", handlers.Index)
 	mux.HandleFunc("/login", handlers.LogIn)
 	mux.HandleFunc("/threads", handlers.Threads)
+	mux.HandleFunc("/threads/read", handlers.ReadThreads)
 	// login.htmlにアクセスしたときに/authenticateが呼び出すようになっている
 	mux.HandleFunc("/authenticate", handlers.Authenticate)
 
