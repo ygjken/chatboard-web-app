@@ -21,8 +21,10 @@ func main() {
 	mux.HandleFunc("/login", handlers.LogIn)
 	mux.HandleFunc("/threads", handlers.Threads)
 	mux.HandleFunc("/threads/read", handlers.ReadThreads)
+
 	// login.htmlにアクセスしたときに/authenticateが呼び出すようになっている
 	mux.HandleFunc("/authenticate", handlers.Authenticate)
+	mux.HandleFunc("/threads/post", handlers.Post)
 
 	server := &http.Server{
 		Addr:    "localhost:8080",

@@ -70,7 +70,7 @@ func (u *User) CreatePost(t Thread, body string) (p Post, err error) {
 	}
 	defer stmt.Close()
 
-	err = stmt.QueryRow(createUUID(), body, u.Id, t.Id, time.Now()).Scan(&p.Id, &p.Uuid, &p.Body, &p.ThreadId, &p.CreatedAt)
+	err = stmt.QueryRow(createUUID(), body, u.Id, t.Id, time.Now()).Scan(&p.Id, &p.Uuid, &p.Body, &p.UserId, &p.ThreadId, &p.CreatedAt)
 	return
 }
 
