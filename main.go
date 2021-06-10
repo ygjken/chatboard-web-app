@@ -13,7 +13,7 @@ func main() {
 	// 静的ファイルへのリダイレクト
 	// localhost/static/にアクセスした場合
 	// ./publicを見に行く
-	files := http.FileServer(http.Dir("/public"))
+	files := http.FileServer(http.Dir("public"))
 	mux.Handle("/static/", http.StripPrefix("/static/", files))
 
 	// ハンドルファンクションにリダイレクト
