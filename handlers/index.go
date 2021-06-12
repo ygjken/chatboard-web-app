@@ -36,6 +36,48 @@ func Threads(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// 新しいスレッドを始めるページを返す
+func NewThread(w http.ResponseWriter, r *http.Request) {
+	_, err := session(w, r)
+	if err != nil { // sessionが存在しなければ
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		files := []string{
+			"templates/layout.html",
+			"templates/private.navbar.html",
+			"templates/threads.create.html",
+		}
+		t := template.Must(template.ParseFiles(files...))
+		t.ExecuteTemplate(w, "layout", nil)
+	}
+}
+
+// 新しいスレッドを作る
+func CreateThread(w http.ResponseWriter, r *http.Request) {
+	s, err := session(w, r)
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusFound)
+	} else {
+		err = r.ParseForm()
+		if err != nil {
+			fmt.Println("can't parse form:", err)
+		}
+
+		user, err := s.GetUser()
+		if err != nil {
+			fmt.Println("can't get user from session:", err)
+		}
+
+		topic := r.PostFormValue("topic")
+		_, err = user.CreateThread(topic)
+		if err != nil {
+			fmt.Println("can't create thread:", err)
+		}
+
+		http.Redirect(w, r, "/threads", http.StatusFound)
+	}
+}
+
 // 選択したThreadのPostの一覧を表示する
 func ReadThreads(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()

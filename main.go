@@ -21,6 +21,8 @@ func main() {
 	mux.HandleFunc("/login", handlers.LogIn)
 	mux.HandleFunc("/threads", handlers.Threads)
 	mux.HandleFunc("/threads/read", handlers.ReadThreads)
+	mux.HandleFunc("/threads/newThreads", handlers.NewThread)
+	mux.HandleFunc("/threads/createThreads", handlers.CreateThread)
 
 	// login.htmlにアクセスしたときに/authenticateが呼び出すようになっている
 	mux.HandleFunc("/authenticate", handlers.Authenticate)

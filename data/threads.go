@@ -62,6 +62,18 @@ func (p *Post) GetUser() (u User) {
 	return
 }
 
+func (u *User) CreateThread(topic string) (t Thread, err error) {
+	s := "insert into threads (uuid, topic, user_id, created_at) values ($1, $2, $3, $4) returning id, uuid, topic, user_id, created_at"
+	stmt, err := Db.Prepare(s)
+	if err != nil {
+		return
+	}
+	defer stmt.Close()
+
+	err = stmt.QueryRow(createUUID(), topic, u.Id, time.Now()).Scan(&t.Id, &t.Uuid, &t.Topic, &t.UserId, &t.CreateAt)
+	return
+}
+
 func (u *User) CreatePost(t Thread, body string) (p Post, err error) {
 	s := "insert into posts (uuid, body, user_id, thread_id, created_at) values ($1, $2, $3, $4, $5) returning id, uuid, body, user_id, thread_id, created_at"
 	stmt, err := Db.Prepare(s)
