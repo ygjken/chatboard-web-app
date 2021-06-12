@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/ygjken/chatboard-web-app/handlers"
 )
@@ -29,7 +30,7 @@ func main() {
 	mux.HandleFunc("/threads/post", handlers.Post)
 
 	server := &http.Server{
-		Addr:    "localhost:8080",
+		Addr:    ":" + os.Getenv("PORT"),
 		Handler: mux,
 	}
 
