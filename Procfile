@@ -1,1 +1,1 @@
-web: chatboard-web-app
+web: bin/chatboard-web-app
