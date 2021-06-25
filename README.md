@@ -1,6 +1,6 @@
 # ChatBoard
 
-[日本語](https://github.com/ygjken/chatboard-web-app/misc/jpREADME.md)
+[日本語](https://github.com/ygjken/chatboard-web-app/blob/master/misc/jpREADME.md)
 
 This is a simple BBS.
 
