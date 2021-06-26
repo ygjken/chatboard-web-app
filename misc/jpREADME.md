@@ -1,4 +1,5 @@
 # ChatBoard
+公開しているページ　👉 [URL](https://chatboard-web-app.herokuapp.com/)
 
 これは掲示板Webアプリです。
 
